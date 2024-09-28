@@ -1,0 +1,9 @@
+<div class="h100">
+    {{#each category}}
+    <div class="modulo {{#if allow}} allow{{else}} unallow{{/if}}">
+        <a href="/services/{{this.id}}">+</a>
+        <p>{{this.name}}</p>
+        <p></p>
+    </div>
+    {{/each}}
+</div>

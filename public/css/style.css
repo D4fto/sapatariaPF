@@ -1,5 +1,10 @@
-
-
+:root{
+    --white: #FFF;
+    --black: #000;
+    --color1: #996533;
+    --color2: #ffcb99;
+    --menuHHeight: 75px;
+}
 .anton-regular {
     font-family: "Anton", sans-serif;
     font-weight: 400;
@@ -12,11 +17,51 @@
     margin: 0;
 }
 body{
+    box-sizing: border-box;
     height: 100vh;
     width: 100vw;
+    overflow-x: hidden;
+}
+nav.menus{
+    position: sticky;
+    top: 0;
+}
+.menuH{
+    height: var(--menuHHeight);
+    width: 100vw;
+    background-color: var(--color2);
+    padding: 5px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    list-style: none;
+    gap: 15px;
+    li, a{
+        background-color: var(--color2);
+        height: 100%;
+        display: flex;
+        align-items: center;
+        transition: filter .25s, font-size .25s;
+    }
+    img{
+        max-height: 100%
+    }
+    h1{
+        color: var(--black);
+        text-transform: uppercase;
+        font-size: 2.5em;
+        margin-right: 15px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    a:hover{
+        filter: brightness(.9);
+        font-size: 1.1em;
+    }
+}
+.h100{
+    height: calc(100% - var(--menuHHeight));
 }
 .login{
-    height: 100%;
     width: 100%;
     display: flex;
     align-items: center;
@@ -29,7 +74,7 @@ body{
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background-color: #ffcb99;
+        background-color: var(--color2);
         font-size: 1.25rem;
         .title{
             font-family: "Anton", sans-serif;
@@ -57,16 +102,16 @@ body{
         input{
             font-size: 1rem;
             width: 100%;
-            border: 3px solid #996533;
+            border: 3px solid var(--color1);
             border-radius: 10px;
             padding: 10px 15px;
         }
         input:focus{
-            outline: 1px solid rgb(255, 255, 255);
+            outline: 1px solid var(--white);
         }
         input[type='submit']{
-            background-color: #996533;
-            color: #FFF;
+            background-color: var(--color1);
+            color: var(--white);
             font-weight: 900;
             font-size: 1.25rem;
             padding: 5px;
@@ -95,12 +140,12 @@ body{
     gap: 5px;
     justify-content: space-between;
     .horizontal{
-        background-color: #fff;
+        background-color: var(--white);
         height: 3px;
         flex-grow: 1;
     }
     .vertical{
-        background-color: #fff;
+        background-color: var(--white);
         height: 9px;
         width: 3px;
     }

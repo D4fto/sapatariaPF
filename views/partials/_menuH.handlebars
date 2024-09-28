@@ -1,0 +1,15 @@
+<ul class="menuH">
+    <li><h1>Sapataria Passo Fino</h1><img src="/imgs/sapato.png" alt="Icone de sapato"></li>
+    {{#if nomeFuncionario}}
+    <li>
+        <a href="/account">
+            <img src="/imgs/{{imagemFuncionario}}" alt="imagem do funcionário">
+            <ul class="userData">
+                <li><p><strong>Nome:</strong> {{nomeFuncionario}}</p></li>
+                <li><p><strong>Cpf:</strong> {{cpfFuncionario}}</p></li>
+                <li><p><strong>Contato: </strong> {{contatoFuncionario}}</p></li>
+            </ul>
+        </a>
+    </li>
+    {{/if}}
+</ul>

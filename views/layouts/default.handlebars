@@ -4,12 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SapatariaPF</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="/imgs/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
+    <nav class="menus">
+        {{>_menuH}}
+    </nav>
     {{{body}}}
+    {{#if notchat}}
+    {{else}}
+    <div class="chat"><i class="bi bi-chat-dots-fill"></i></div>
+    {{/if}}
+    <script>
+        function verificaScroll() {
+            // Altura total do conteúdo do documento
+            const alturaDocumento = document.documentElement.scrollHeight;
+            // Altura da janela visível
+            const alturaJanela = window.innerHeight;
+            // Verifica se a altura do documento é maior que a altura da janela
+            if (alturaDocumento > alturaJanela) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if(verificaScroll()){
+            document.querySelector('.menuH').style.paddingRight = '20px'
+        }
+    </script>
 </body>
 </html>

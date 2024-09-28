@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../DW1-2024"
+		},
+		{
+			"path": "../mouse/python"
+		},
+		{
+			"path": "../epic_gomes"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "sapatariaPF"
+	}
+}
