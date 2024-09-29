@@ -55,7 +55,7 @@
 
         socket.on('message', (msg) => {
             console.log('Mensagem recebida:', msg); // Adicione este log
-            const li = document.createElement('li.ele');
+            const li = document.createElement(`li  class='ele'`);
             li.innerHTML = `<p class="message">${msg}</p>`;
             messages.appendChild(li);
         });
