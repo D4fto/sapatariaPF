@@ -1,0 +1,54 @@
+<div class="h100 account">
+    <div class="dados">
+        <label for="nome">Nome: </label>
+        <input type="text" name="nome" id="nome" value="{{nomeFuncionario}}" disabled>
+        <label for="cpf">CPF: </label>
+        <div><input type="password" name="cpf" id="cpf" value="{{cpfFuncionario}}" disabled><i class="bi bi-eye-slash"></i></div>
+        <label for="telefone">Telefone: </label>
+        <input type="text" name="telefone" id="telefone" value="{{contatoFuncionario}}" disabled>
+        <label for="data">Data de Adimissão: </label>
+        <input type="date" name="data" id="data" value="{{adimissao}}" disabled>
+        <label for="salario">Salário: </label>
+        <div><input type="password" name="salario" id="salario" value="{{salario}} R$" disabled><i class="bi bi-eye-slash"></i></div>
+        <label for="comissao">Comissao: </label>
+        <div><input type="password" name="comissao" id="comissao" value="{{comissao}}%" disabled><i class="bi bi-eye-slash"></i></div>
+        <div class="botoes_dados">
+            <button>Editar</button>
+            <button>Vendas</button>
+        </div>
+    </div>
+    <div class="endereco">
+        <h1>Endereço: </h1>
+        <div>
+            <div>
+                <label for="CEP">CEP: </label>
+                <input type="text" name="CEP" id="CEP" value="{{endereco.CEP}}" disabled>
+            </div>
+            <div>
+                <label for="numero">Nº: </label>
+                <input type="text" name="numero" id="numero" value="{{endereco.N_casa_Endereco}}" disabled>
+            </div>
+        </div>
+        <label for="rua">Rua: </label>
+        <input type="text" name="rua" id="rua" value="{{endereco.Rua_Endereco}}" disabled>
+        <label for="numero">Bairro: </label>
+        <input type="text" name="bairro" id="bairro" value="{{endereco.Bairro}}" disabled>
+        <div>
+            <div>
+                <label for="cidade">Cidade: </label>
+                <input type="text" name="cidade" id="cidade" value="{{endereco.Nome_Cidade}}" disabled>
+            </div>
+            <div>
+                <label for="estado">Estado: </label>
+                <select name="estado" id="estado" disabled="disabled">
+                    {{#each estados}}
+                    <option value="{{this.id_Estado}}">{{this.Nome_Estado}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="foto">
+        <img src="imgs/{{imagemFuncionario}}" alt="Foto do funcionário">
+    </div>
+</div>

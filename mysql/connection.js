@@ -7,17 +7,11 @@ const connection = mysql2.createConnection({
   database: 'sapatariapf',
   password: '123456789'
 });
-console.log(argon2.hash('pablo').then((senha)=>{
-  console.log(senha)
-}))
-connection.execute(
-  'SELECT * FROM Pessoa WHERE id_Pessoa = ? and Nome_Pessoa = ? LIMIT 1',
-  [1, 'pabla'],
-  function (err, usuario) {
-    if(err===null){
-        console.log(usuario[0]==undefined)
-      }
-      console.log(err)
+connection.connect((err) => {
+  if (err) {
+      console.error('Erro ao conectar ao banco de dados:', err);
+      return;
   }
-);
+  console.log('Conectado ao banco de dados!');
+});
 module.exports={connection: connection}
