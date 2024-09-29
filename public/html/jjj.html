@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Suporte</h1>
+    </header>
+    <main class="chatMain">
+        <ul id="messages">
+            <li class="eu"><p class="message">Olá</p></li>
+            <li class="ele"><h1>Pablo</h1><p class="mesage">Olá, qual o seu problema?</p></li>
+        </ul>
+    </main>
+    <footer>
+        <input id="messageInput" type="text" placeholder="Sua Mensagem">
+        <i class="bi bi-arrow-right-short" id="sendBtn"></i>
+    </footer>
+
+    <script>
+        const socket = io('https://chatsapatariapf.onrender.com:3000'); // Mantenha a URL do WebSocket
+
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const messages = document.getElementById('messages');
+
+        sendBtn.onclick = () => {
+            const message = messageInput.value;
+            if (message) {
+                socket.emit('message', message); // Envia a mensagem ao servidor
+                messageInput.value = ''; // Limpa o campo de entrada
+            }
+        };
+
+        socket.on('message', (msg) => {
+            const li = document.createElement('li');
+            li.innerHTML = `<p class="message">${msg}</p>`;
+            messages.appendChild(li);
+        });
+    </script>
+</body>
+</html>

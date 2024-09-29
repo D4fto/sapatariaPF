@@ -1,19 +1,27 @@
 {
 	"folders": [
 		{
+			"name": "sapatariaPF",
 			"path": "."
 		},
 		{
+			"name": "chatsapatariapf",
+			"path": "../chatsapatariapf"
+		},
+		{
+			"name": "DW1-2024",
 			"path": "../DW1-2024"
 		},
 		{
+			"name": "python",
 			"path": "../mouse/python"
 		},
 		{
+			"name": "epic_gomes",
 			"path": "../epic_gomes"
 		}
 	],
 	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "sapatariaPF"
+		"liveServer.settings.multiRootWorkspaceName": "chatsapatariapf"
 	}
 }
