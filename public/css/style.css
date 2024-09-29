@@ -263,8 +263,8 @@ nav.menus{
         padding: 5px;
     }
     input:disabled, select:disabled{
-        color: rgb(88, 88, 88);
         border: 1px solid var(--black);
+        color: rgb(88, 88, 88);
     }
     select{
         padding: 4px;
@@ -347,6 +347,7 @@ nav.menus{
         overflow-y: scroll;
         height: calc(100% - 100px);
         top: 50px;
+        width: 100%;
         padding: 15px;
         ul{
             display: flex;
