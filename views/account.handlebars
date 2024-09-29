@@ -3,18 +3,18 @@
         <label for="nome">Nome: </label>
         <input type="text" name="nome" id="nome" value="{{nomeFuncionario}}" disabled>
         <label for="cpf">CPF: </label>
-        <div><input type="password" name="cpf" id="cpf" value="{{cpfFuncionario}}" disabled><i class="bi bi-eye-slash"></i></div>
+        <div><input type="password" name="cpf" id="cpf" value="{{cpfFuncionario}}" disabled><i class="bi bi-eye-slash" onclick="mudar('cpf')"></i></div>
         <label for="telefone">Telefone: </label>
         <input type="text" name="telefone" id="telefone" value="{{contatoFuncionario}}" disabled>
         <label for="data">Data de Adimissão: </label>
         <input type="date" name="data" id="data" value="{{adimissao}}" disabled>
         <label for="salario">Salário: </label>
-        <div><input type="password" name="salario" id="salario" value="{{salario}} R$" disabled><i class="bi bi-eye-slash"></i></div>
+        <div><input type="password" name="salario" id="salario" value="{{salario}} R$" disabled><i class="bi bi-eye-slash" onclick="mudar('salario')"></i></div>
         <label for="comissao">Comissao: </label>
-        <div><input type="password" name="comissao" id="comissao" value="{{comissao}}%" disabled><i class="bi bi-eye-slash"></i></div>
+        <div><input type="password" name="comissao" id="comissao" value="{{comissao}}%" disabled><i class="bi bi-eye-slash" onclick="mudar('comissao')"></i></div>
         <div class="botoes_dados">
-            <button>Editar</button>
-            <button>Vendas</button>
+            <button  id="enviar" onclick="liberarParaOsCrias()">Editar</button>
+            <button id="vendas">Vendas</button>
         </div>
     </div>
     <div class="endereco">
@@ -40,7 +40,7 @@
             </div>
             <div>
                 <label for="estado">Estado: </label>
-                <select name="estado" id="estado" disabled="disabled">
+                <select name="estado" id="estado" disabled='disabled'>
                     {{#each estados}}
                     <option value="{{this.id_Estado}}">{{this.Nome_Estado}}</option>
                     {{/each}}
@@ -52,3 +52,39 @@
         <img src="imgs/{{imagemFuncionario}}" alt="Foto do funcionário">
     </div>
 </div>
+<script>
+    function mudar(elemento){
+        elemento = document.getElementById(elemento)
+        if(elemento.type==='password'){
+            elemento.type='text'
+            elemento.nextSibling.classList.remove('bi-eye-slash')
+            elemento.nextSibling.classList.add('bi-eye')
+            return
+        }
+        elemento.type='password'
+        elemento.nextSibling.classList.remove('bi-eye')
+        elemento.nextSibling.classList.add('bi-eye-slash')
+        return
+
+    }
+    function liberarParaOsCrias(){
+        const inputs = document.querySelectorAll('input')
+        const selects = document.querySelectorAll('select')
+        for(let i = 0; i<selects.length; i++){
+            let element = selects[i]
+            if(element.disabled){
+                element.disabled=false
+                continue
+            }
+            element.disabled=true
+        }
+        for(let i = 0; i<inputs.length; i++){
+            let element = inputs[i]
+            if(element.disabled){
+                element.disabled=false
+                continue
+            }
+            element.disabled=true
+        }
+    }
+</script>

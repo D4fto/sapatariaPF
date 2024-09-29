@@ -105,6 +105,13 @@ app.get('/services/:id', authenticated, (req,res)=>{
             })
     })
 })
+app.get('/services/:id/:id2', authenticated, (req,res)=>{
+    connection.execute(`SELECT * FROM sapatariapf.Modulo where Categoria_id_Categoria = ? and ;`,
+        [req.params.id],
+        (err, result)=>{
+            res.send(result[0].nome_Modulo)
+        })
+})
 app.get('/account', authenticated, (req,res)=>{
     connection.execute(`SELECT Endereco.*, Nome_Cidade, Nome_Estado FROM sapatariapf.Endereco, Cidade, Estado, Funcionario_has_Endereco where id_Cidade=Cidade_id_Cidade and Estado_id_Estado=id_Estado and id_Endereco=Endereco_id_Endereco and Funcionario_Pessoa_cpf_Pessoa=?;`,
         [req.user.Pessoa_cpf_Pessoa],
