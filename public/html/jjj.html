@@ -23,6 +23,44 @@
         <i class="bi bi-arrow-right-short" id="sendBtn"></i>
     </footer>
 
-    
+    <script>
+        const socket = io('https://chatsapatariapf.onrender.com'); // Atualize para não incluir a porta
+
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const messages = document.getElementById('messages');
+        messageInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                const message = messageInput.value;
+                if (message) {
+                    socket.emit('message', message); // Envia a mensagem ao servidor
+                    messageInput.value = ''; // Limpa o campo de entrada
+                }
+            }
+        });
+        // Verificar conexão
+        socket.on('connect', () => {
+            console.log('Conectado ao servidor');
+        });
+
+        socket.on('connect_error', (err) => {
+            console.log('Erro de conexão:', err);
+        });
+
+        sendBtn.onclick = () => {
+            const message = messageInput.value;
+            if (message) {
+                socket.emit('message', message); // Envia a mensagem ao servidor
+                messageInput.value = ''; // Limpa o campo de entrada
+            }
+        };
+
+        socket.on('message', (msg) => {
+            console.log('Mensagem recebida:', msg); // Adicione este log
+            const li = document.createElement('li');
+            li.innerHTML = `<p class="message">${msg}</p>`;
+            messages.appendChild(li);
+        });
+    </script>
 </body>
 </html>
