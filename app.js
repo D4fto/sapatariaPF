@@ -136,6 +136,6 @@ app.get('/account', authenticated, (req,res)=>{
     })
 })
 app.get('/kkk',(req,res)=>{
-    res.sendFile('html/jjj.html')
+    res.render('aaa')
 })
 app.listen(process.env.PORT || 8080); 
