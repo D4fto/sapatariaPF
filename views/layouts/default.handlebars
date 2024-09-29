@@ -18,7 +18,11 @@
     {{{body}}}
     {{#if notchat}}
     {{else}}
-    <div class="chat"><i class="bi bi-chat-dots-fill"></i></div>
+    <input type="checkbox" name="chatCheck" id="chatCheck" hidden>
+    <iframe src="/html/chat.html" frameborder="0" id="chatIframe"></iframe>
+    <label for="chatCheck">
+        <div class="chat"><i class="bi bi-chat-dots-fill"></i></div>
+    </label>
     {{/if}}
     <script>
         function verificaScroll() {

@@ -91,7 +91,7 @@ app.get('/services/:id', authenticated, (req,res)=>{
             for (let i = 0; i < result.length; i++) {
                 const element = result[i];
                 modules.push({
-                    id: element.id_Modulo,
+                    id: String(element.Categoria_id_Categoria)+'/'+String(element.id_Modulo),
                     name: element.nome_Modulo,
                     allow: element.possui
                 })

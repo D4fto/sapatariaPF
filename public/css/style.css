@@ -27,17 +27,52 @@ nav.menus{
     top: 0;
 }
 .modulo{
+    height: 50%;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     a{
-        color: unset;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 120px;
+        height: 120px;
+        font-size: 5rem;
+        font-weight: 900;
+        text-decoration: none;
+        text-align: center;
+        aspect-ratio: 1/1;
+        color: var(--white);
+        background-color: var(--color1);
+        border-radius: 15px;
     }
 }
+.modulos{
+    font-size: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
 .unallow{
-    color: red;
+    opacity: 50%;
+    cursor: default;
+    pointer-events: none;
+    a{
+        cursor: default;
+    }
 }
 .allow{
-    color: limegreen;
+    order: -1;
+    a{
+        transition: filter .5s, transform .5s;
+    }
 }
-
+.allow a:hover{
+    filter: brightness(1.1);
+    transform: scale(1.05);
+}
 .menuH{
     height: var(--menuHHeight);
     width: 100vw;
@@ -181,14 +216,17 @@ nav.menus{
     }
 }
 .chat{
+    background-color: var(--white);
+    z-index: 1;
     position: fixed;
     bottom: 15px;
-    right: 15px;
-    padding: 15px;
+    left: 15px;
+    height: 60px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 15px;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    object-position: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.699);
     color: var(--color1);
     font-size: 1.5em;
@@ -274,4 +312,115 @@ nav.menus{
     button:hover{
         filter: brightness(0.8);
     }
+}
+#chatIframe{
+    display: none;
+    position: fixed;
+    bottom: 15px;
+    left: 15px;
+    height: 500px;
+    width: 300px;
+    overflow: hidden;
+    z-index: 0;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.205);
+    border: 10px solid var(--color1);
+    border-radius: 15px;
+}
+#chatHtml{
+    background-color: var(--white);
+    ::-webkit-scrollbar{
+        width: 15px;
+    }
+    ::-webkit-scrollbar-thumb{
+        background-color: var(--color1);
+    }
+    main{
+        background-image: url('/imgs/bg.jpg');
+        background-size: cover;
+        background-color: var(--white);
+        position: fixed;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        height: calc(100% - 100px);
+        top: 50px;
+        padding: 15px;
+        ul{
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            list-style: none;
+            li{
+                padding: 5px 10px;
+            }
+        }
+    }
+    header{
+        position: fixed;
+        height: 50px;
+        top: 0;
+        background-color: var(--color2);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 15px;
+    }
+    footer{
+        background-color: var(--white);
+        position: fixed;
+        height: 50px;
+        width: calc(100% - 50px);
+        bottom: 0;
+        right: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        input{
+            padding: 7px 10px;
+            border-radius: 10px;
+            width: 100%;
+            flex-grow: 1;
+            border: 2px solid var(--color1);
+        }
+        i{
+            color: var(--color1);
+            font-weight: 900;
+            display: flex;
+            height: 100%;
+            width: 20%;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            cursor: pointer;
+        }
+    }
+    .eu, .ele{
+        width: 70%;
+        border-radius: 15px;
+    }
+    .eu{
+        background-color: var(--white);
+        border-bottom-right-radius: 0;
+        align-self: flex-end;
+    }
+    .ele{
+        h1{
+            font-size: 1.25em;
+        }
+        background-color: var(--color2);
+        border-bottom-left-radius: 0;
+    }
+}
+#chatCheck:checked~#chatIframe{
+    display: block;
+}
+#chatCheck:checked~label .chat{
+    box-shadow: none;
+    border-bottom: 10px solid var(--color1);
+    border-left: 10px solid var(--color1);
+    border-radius: 0px;
+    transition: none;
+}
+#chatCheck:checked~label .chat:hover{
+    transform: none;
+    filter: none;
 }
