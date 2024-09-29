@@ -11,6 +11,7 @@
 <body>
     <header>
         <h1>Suporte</h1>
+        <p id="cpf" hidden>69696969696</p>
     </header>
     <main class="chatMain">
         <ul id="messages">
@@ -23,19 +24,25 @@
     </footer>
     <script>
         const socket = io('https://chatsapatariapf.onrender.com'); // Atualize para não incluir a porta
-
         const messageInput = document.getElementById('messageInput');
         const sendBtn = document.getElementById('sendBtn');
+        const cpf = document.getElementById('cpf')
         const messages = document.getElementById('messages');
         messageInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
-                const message = messageInput.value;
-                if (message) {
-                    socket.emit('message', message); // Envia a mensagem ao servidor
-                    messageInput.value = ''; // Limpa o campo de entrada
-                }
+                enviaDog()
             }
         });
+        function enviaDog(){
+            const message = JSON.stringify({
+                cpf: cpf.innerText,
+                msg: messageInput.value
+            })
+            if (message) {
+                socket.emit('message', message); // Envia a mensagem ao servidor
+                messageInput.value = ''; // Limpa o campo de entrada
+            }
+        }
         // Verificar conexão
         socket.on('connect', () => {
             console.log('Conectado ao servidor');
@@ -46,18 +53,17 @@
         });
 
         sendBtn.onclick = () => {
-            const message = messageInput.value;
-            if (message) {
-                socket.emit('message', message); // Envia a mensagem ao servidor
-                messageInput.value = ''; // Limpa o campo de entrada
-            }
+            enviaDog()
         };
 
         socket.on('message', (msg) => {
-            console.log('Mensagem recebida:', msg); // Adicione este log
+            message = JSON.parse(msg)
+            console.log('Mensagem recebida:', message.msg); // Adicione este log
             const li = document.createElement(`li`);
-            li.classList.add('ele')
-            li.innerHTML = `<p class="message">${msg}</p>`;
+            if(message.cpf!=cpf.innerText){
+                li.classList.add('ele')
+                li.innerHTML = `<h1>${message.nome}</h1><p class="message">${message.msg}</p>`;
+            }
             messages.appendChild(li);
         });
     </script>
