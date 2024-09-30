@@ -61,8 +61,7 @@
             message = JSON.parse(msg)
             const li = document.createElement(`li`);
             if(message.cpf!=cpf.innerText){
-                console.log(esuporte)
-                if(message.esuporte==9){
+                if(message.esuporte){
                     li.classList.add('sup')
                     li.innerHTML = `<h1>${message.nome} <span>Suporte</span></h1><p class="message">${message.msg}</p>`;
                 }else{
