@@ -74,8 +74,19 @@
                 li.innerHTML = `<p class="message">${message.msg}</p>`;
 
             }
+            
             messages.appendChild(li);
+            if (isScrolledToBottom()) {
+                scrollToBottom();
+            }
         });
+        function isScrolledToBottom() {
+            return messages.scrollHeight - messages.scrollTop === messages.clientHeight;
+        }
+
+        function scrollToBottom() {
+            messages.scrollTop = messages.scrollHeight;
+        }
     </script>
 </body>
 </html>

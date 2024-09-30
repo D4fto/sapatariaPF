@@ -280,6 +280,37 @@ nav.menus{
     flex-direction: column;
     justify-content: center;
 }
+.foto{
+    width: 90%;
+    padding: 5%;
+    img{
+        border-top-left-radius: 40px;
+        border-top-right-radius: 40px;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        object-position: center;
+        width: 50%;
+    }
+    label{
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+        width: 100%;
+        background-color: var(--color2);
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        i{
+            color: var(--color1);
+            font-size: 2.5em;
+        }
+        transition: filter .5s;
+    }
+    label:hover{
+        filter: brightness(.75);
+    }
+}
 .endereco>div{
     input:last-child, select{
         width: 100%;
