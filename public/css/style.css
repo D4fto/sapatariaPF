@@ -408,10 +408,19 @@ nav.menus{
         align-self: flex-end;
     }
     .ele{
+        background-color: var(--color2);
+    }
+    .sup{
+        background-color: lime;
+        span{
+            font-size: .5em;
+            font-weight: 100;
+        }
+    }
+    .ele,.sup{
         h1{
             font-size: 1.25em;
         }
-        background-color: var(--color2);
         border-bottom-left-radius: 0;
     }
 }
