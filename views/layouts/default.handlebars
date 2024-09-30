@@ -57,6 +57,8 @@
                 }
                 iframe.contentWindow.document.getElementById('messages').appendChild(li);
             })
+            
+            iframe.contentWindow.document.getElementById('chatMain').scrollTop = iframe.contentWindow.document.getElementById('chatMain').scrollHeight;
         };
 
     </script>
