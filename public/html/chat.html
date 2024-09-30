@@ -75,9 +75,9 @@
                 li.innerHTML = `<p class="message">${message.msg}</p>`;
 
             }
-            
+            let esta = isScrolledToBottom()
             messages.appendChild(li);
-            if (isScrolledToBottom()) {
+            if (esta) {
                 scrollToBottom();
             }
         });
