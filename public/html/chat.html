@@ -23,7 +23,7 @@
         <i class="bi bi-arrow-right-short" id="sendBtn"></i>
     </footer>
     <script>
-        const socket = io('https://chatsapatariapf.onrender.com'); // Atualize para não incluir a porta
+        const socket = io('https://chatsapatariapf.onrender.com');
         const messageInput = document.getElementById('messageInput');
         const sendBtn = document.getElementById('sendBtn');
         const cpf = document.getElementById('cpf')
@@ -57,7 +57,7 @@
         };
 
         socket.on('message', (msg) => {
-            console.log('Mensagem recebida:', msg); // Adicione este log
+            console.log('Mensagem recebida:', msg);
             message = JSON.parse(msg)
             const li = document.createElement(`li`);
             if(message.cpf!=cpf.innerText){
