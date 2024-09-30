@@ -116,10 +116,13 @@ app.get('/services/:id', authenticated, (req,res)=>{
     })
 })
 app.get('/services/:id/:id2', authenticated, (req,res)=>{
-    connection.execute(`SELECT * FROM sapatariapf.Modulo where Categoria_id_Categoria = ? and ;`,
-        [req.params.id],
+    connection.execute(`SELECT * FROM sapatariapf.Modulo where Categoria_id_Categoria = ? and id_Modulo=?;`,
+        [req.params.id,req.params.id2],
         (err, result)=>{
-            res.send(result[0].nome_Modulo)
+            if(result){
+                res.render('aaa', {Nome: result[0].nome_Modulo})
+            }
+            res.redirect('/menu')
         })
 })
 app.get('/account', authenticated, (req,res)=>{
