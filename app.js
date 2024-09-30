@@ -7,6 +7,24 @@ const { censureCpf, formatCpf } = require('./helpers/cpf')
 const passport = require('passport')
 var session = require('express-session');
 const app = express();
+const fs = require('fs');
+const path = require('path');
+
+// Função para verificar se um arquivo .hbs existe
+function verificarArquivoHbs(nomeArquivo) {
+  // Define o caminho completo do arquivo (ajuste o caminho conforme necessário)
+  const caminhoArquivo = path.join(__dirname, 'views', `${nomeArquivo}.handlebars`);
+
+  // Verifica se o arquivo existe
+  if (fs.existsSync(caminhoArquivo)) {
+    return true
+  } else {
+    return false
+  }
+}
+
+// Exemplo de uso
+verificarArquivoHbs('meuArquivo');
 
 function extrairData(data){
     // Convertendo a string para um objeto Date
@@ -74,7 +92,7 @@ app.get('/menu', authenticated, (req,res)=>{
                     allow: element.nome_Categoria=='Suporte'?1:element.possui
                 })
             }
-            connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 20;',(err, mensagens)=>{
+            connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 40;',(err, mensagens)=>{
                 res.render('menu',{
                     imagemFuncionario: req.user.Imagem_Funcionario, 
                     nomeFuncionario: req.user.Nome_Pessoa, 
@@ -101,7 +119,7 @@ app.get('/services/:id', authenticated, (req,res)=>{
                     allow: element.nome_Modulo=='FAQ'?1:element.possui
                 })
             }
-            connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 20;',(err, mensagens)=>{
+            connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 40;',(err, mensagens)=>{
                 res.render('menu',{
                     imagemFuncionario: req.user.Imagem_Funcionario, 
                     nomeFuncionario: req.user.Nome_Pessoa, 
@@ -113,28 +131,48 @@ app.get('/services/:id', authenticated, (req,res)=>{
                     category: modules
                 })
             })
+        })
     })
-})
 app.get('/services/:id/:id2', authenticated, (req,res)=>{
     connection.execute(`SELECT * FROM sapatariapf.Modulo where Categoria_id_Categoria = ? and id_Modulo=?;`,
         [req.params.id,req.params.id2],
         (err, result)=>{
             if(result){
-                res.render('aaa', {Nome: result[0].nome_Modulo})
+                connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 40;',(err, mensagens)=>{
+                    const dados = {
+                        imagemFuncionario: req.user.Imagem_Funcionario, 
+                        nomeFuncionario: req.user.Nome_Pessoa, 
+                        cpfFuncionario: censureCpf(formatCpf(req.user.Pessoa_cpf_Pessoa)), 
+                        cpfFuncionario2: req.user.Pessoa_cpf_Pessoa, 
+                        contatoFuncionario: formatarTelefone(req.user.telefone_Pessoa), 
+                        mensagens: mensagens,
+                        Nome: result[0].nome_Modulo
+                    }
+                    if(verificarArquivoHbs(`service_${req.params.id2}`)){
+                        res.render(`service_${req.params.id2}`,dados)
+                        return
+                    }
+                    else{
+                        res.render('aaa',dados)
+                        return
+                    }
+                })
+                return
             }
-            res.redirect('/menu')
+            else{
+                res.redirect('/menu')
+                return
+            }
         })
-})
+    }
+)
 app.get('/account', authenticated, (req,res)=>{
     connection.execute(`SELECT Endereco.*, Nome_Cidade, Nome_Estado FROM sapatariapf.Endereco, Cidade, Estado, Funcionario_has_Endereco where id_Cidade=Cidade_id_Cidade and Estado_id_Estado=id_Estado and id_Endereco=Endereco_id_Endereco and Funcionario_Pessoa_cpf_Pessoa=?;`,
         [req.user.Pessoa_cpf_Pessoa],
         (err, result)=>{
             connection.query(`SELECT * FROM Estado;`
                 ,(erro, states)=>{
-                    console.log(result)
-                    console.log(states)
-                    connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 20;',(err, mensagens)=>{
-                        console.log(mensagens)
+                    connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 40;',(err, mensagens)=>{
                         res.render('account',{
                             imagemFuncionario: req.user.Imagem_Funcionario, 
                             nomeFuncionario: req.user.Nome_Pessoa, 
