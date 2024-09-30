@@ -71,7 +71,7 @@ app.get('/menu', authenticated, (req,res)=>{
                 category.push({
                     id: element.id_Categoria,
                     name: element.nome_Categoria,
-                    allow: element.possui
+                    allow: element.nome_Categoria=='Suporte'?1:element.possui
                 })
             }
             connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 20;',(err, mensagens)=>{
@@ -98,7 +98,7 @@ app.get('/services/:id', authenticated, (req,res)=>{
                 modules.push({
                     id: String(element.Categoria_id_Categoria)+'/'+String(element.id_Modulo),
                     name: element.nome_Modulo,
-                    allow: element.possui
+                    allow: element.nome_Modulo=='FAQ'?1:element.possui
                 })
             }
             connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 20;',(err, mensagens)=>{
