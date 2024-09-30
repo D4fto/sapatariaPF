@@ -57,12 +57,17 @@
         };
 
         socket.on('message', (msg) => {
+            console.log('Mensagem recebida:', msg); // Adicione este log
             message = JSON.parse(msg)
-            console.log('Mensagem recebida:', message.msg); // Adicione este log
             const li = document.createElement(`li`);
             if(message.cpf!=cpf.innerText){
                 li.classList.add('ele')
                 li.innerHTML = `<h1>${message.nome}</h1><p class="message">${message.msg}</p>`;
+            }
+            else{
+                li.classList.add('eu')
+                li.innerHTML = `<p class="message">${message.msg}</p>`;
+
             }
             messages.appendChild(li);
         });
