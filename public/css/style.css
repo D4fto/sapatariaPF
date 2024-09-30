@@ -401,6 +401,7 @@ nav.menus{
     .eu, .ele, .sup{
         width: 70%;
         border-radius: 15px;
+        overflow-wrap: break-word;
     }
     .eu{
         background-color: var(--white);

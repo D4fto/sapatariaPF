@@ -25,9 +25,40 @@
     </label>
     <script>
         const iframe= document.getElementById('chatIframe')
+        const mensagens = [
+            {{#each mensagens}}
+            {
+                msg: '{{this.TXT_Mensagem}}',
+                nome: '{{this.Nome_Pessoa}}',
+                cpf: '{{this.Funcionario_Pessoa_cpf_Pessoa}}',
+                esuporte: {{this.Cargo_id_Cargo}}==9,
+
+            },
+            {{/each}}
+
+        ]
         iframe.onload = function() {
             iframe.contentWindow.document.getElementById('cpf').innerText = '{{cpfFuncionario2}}';
+            mensagens.forEach((message)=>{
+                const li = document.createElement(`li`);
+                console.log(message)
+                if(message.cpf!='{{cpfFuncionario2}}'){
+                    if(message.esuporte){
+                        li.classList.add('sup')
+                        li.innerHTML = `<h1>${message.nome} <span>Suporte</span></h1><p class="message">${message.msg}</p>`;
+                    }else{
+                        li.classList.add('ele')
+                        li.innerHTML = `<h1>${message.nome}</h1><p class="message">${message.msg}</p>`;
+                    }
+                }
+                else{
+                    li.classList.add('eu')
+                    li.innerHTML = `<p class="message">${message.msg}</p>`;
+                }
+                iframe.contentWindow.document.getElementById('messages').appendChild(li);
+            })
         };
+
     </script>
     {{/if}}
     <script>

@@ -74,13 +74,17 @@ app.get('/menu', authenticated, (req,res)=>{
                     allow: element.possui
                 })
             }
-            res.render('menu',{
-                imagemFuncionario: req.user.Imagem_Funcionario, 
-                nomeFuncionario: req.user.Nome_Pessoa, 
-                cpfFuncionario: censureCpf(formatCpf(req.user.Pessoa_cpf_Pessoa)), 
-                cpfFuncionario2: req.user.Pessoa_cpf_Pessoa, 
-                contatoFuncionario: formatarTelefone(req.user.telefone_Pessoa), 
-                category: category
+            connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 20;',(err, mensagens)=>{
+                res.render('menu',{
+                    imagemFuncionario: req.user.Imagem_Funcionario, 
+                    nomeFuncionario: req.user.Nome_Pessoa, 
+                    cpfFuncionario: censureCpf(formatCpf(req.user.Pessoa_cpf_Pessoa)), 
+                    cpfFuncionario2: req.user.Pessoa_cpf_Pessoa, 
+                    contatoFuncionario: formatarTelefone(req.user.telefone_Pessoa), 
+                    mensagens: mensagens,
+                    cargo: req.user.Cargo_id_Cargo,
+                    category: category
+                })
             })
     })
 })
@@ -97,13 +101,17 @@ app.get('/services/:id', authenticated, (req,res)=>{
                     allow: element.possui
                 })
             }
-            res.render('menu',{
-                imagemFuncionario: req.user.Imagem_Funcionario, 
-                nomeFuncionario: req.user.Nome_Pessoa, 
-                cpfFuncionario: censureCpf(formatCpf(req.user.Pessoa_cpf_Pessoa)), 
-                cpfFuncionario2: req.user.Pessoa_cpf_Pessoa, 
-                contatoFuncionario: formatarTelefone(req.user.telefone_Pessoa), 
-                category: modules
+            connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 20;',(err, mensagens)=>{
+                res.render('menu',{
+                    imagemFuncionario: req.user.Imagem_Funcionario, 
+                    nomeFuncionario: req.user.Nome_Pessoa, 
+                    cpfFuncionario: censureCpf(formatCpf(req.user.Pessoa_cpf_Pessoa)), 
+                    cpfFuncionario2: req.user.Pessoa_cpf_Pessoa, 
+                    contatoFuncionario: formatarTelefone(req.user.telefone_Pessoa), 
+                    mensagens: mensagens,
+                    cargo: req.user.Cargo_id_Cargo,
+                    category: modules
+                })
             })
     })
 })
@@ -122,18 +130,23 @@ app.get('/account', authenticated, (req,res)=>{
                 ,(erro, states)=>{
                     console.log(result)
                     console.log(states)
-                    res.render('account',{
-                        imagemFuncionario: req.user.Imagem_Funcionario, 
-                        nomeFuncionario: req.user.Nome_Pessoa, 
-                        cpfFuncionario: censureCpf(formatCpf(req.user.Pessoa_cpf_Pessoa)), 
-                        cpfFuncionario3: formatCpf(req.user.Pessoa_cpf_Pessoa), 
-                        cpfFuncionario2: req.user.Pessoa_cpf_Pessoa, 
-                        contatoFuncionario: formatarTelefone(req.user.telefone_Pessoa), 
-                        salario: (req.user.Salario_Funcionario).toFixed(2),
-                        adimissao: extrairData(req.user.Adimissao_Funcionario),
-                        comissao: req.user.Comissao_Funcionario*100,
-                        endereco: result[0],
-                        estados: states
+                    connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 20;',(err, mensagens)=>{
+                        console.log(mensagens)
+                        res.render('account',{
+                            imagemFuncionario: req.user.Imagem_Funcionario, 
+                            nomeFuncionario: req.user.Nome_Pessoa, 
+                            cpfFuncionario: censureCpf(formatCpf(req.user.Pessoa_cpf_Pessoa)), 
+                            cpfFuncionario3: formatCpf(req.user.Pessoa_cpf_Pessoa), 
+                            cpfFuncionario2: req.user.Pessoa_cpf_Pessoa, 
+                            contatoFuncionario: formatarTelefone(req.user.telefone_Pessoa), 
+                            salario: (req.user.Salario_Funcionario).toFixed(2),
+                            adimissao: extrairData(req.user.Adimissao_Funcionario),
+                            comissao: req.user.Comissao_Funcionario*100,
+                            endereco: result[0],
+                            estados: states,
+                            cargo: req.user.Cargo_id_Cargo,
+                            mensagens: mensagens
+                        })
                     })
                 }
             )
