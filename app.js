@@ -193,7 +193,37 @@ app.get('/account', authenticated, (req,res)=>{
             )
     })
 })
-app.get('/kkk',(req,res)=>{
-    res.render('aaa')
+app.get('/vendasFuncionario', authenticated, (req,res)=>{
+    const dataMin = req.query.dataMin?req.query.dataMin:'0000-01-01'
+    const dataMax = req.query.dataMax?req.query.dataMax:'9999-12-12'
+    const cliente = req.query.cliente?`%${req.query.cliente}%`:'%%'
+    const valorMin = req.query.valorMin?parseInt(req.query.valorMin): -1
+    const valorMax = req.query.valorMax?parseInt(req.query.valorMax): 9999999999999999
+    connection.execute(
+        `SELECT Pedido.*, Nome_Pessoa as cliente FROM sapatariapf.Pedido, Cliente, Pessoa 
+        where Funcionario_Pessoa_cpf_Pessoa=? and Pedido_data>=? and Pedido_data<=? 
+        and Cliente_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa = cpf_Pessoa and Nome_Pessoa LIKE ? and Valor_Total>=? and Valor_Total<=? ORDER BY Pedido_data;`,
+        [req.user.Pessoa_cpf_Pessoa, dataMin, dataMax, cliente, valorMin, valorMax],
+        (err, result)=>{
+            console.log(result)
+            result.forEach((element)=>{
+                element.Pedido_data = extrairData(element.Pedido_data)
+                element.Comissao_taxa = element.Comissao_taxa*100
+            })
+            connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 40;',(err, mensagens)=>{
+                res.render('vendasFuncionario',{
+                    imagemFuncionario: req.user.Imagem_Funcionario, 
+                    nomeFuncionario: req.user.Nome_Pessoa, 
+                    cpfFuncionario: censureCpf(formatCpf(req.user.Pessoa_cpf_Pessoa)), 
+                    cpfFuncionario3: formatCpf(req.user.Pessoa_cpf_Pessoa), 
+                    cpfFuncionario2: req.user.Pessoa_cpf_Pessoa, 
+                    contatoFuncionario: formatarTelefone(req.user.telefone_Pessoa), 
+                    vendas: result,
+                    mensagens: mensagens
+                })
+            })
+        }
+    )
+    
 })
 app.listen(process.env.PORT || 8080); 

@@ -1,0 +1,78 @@
+<div class="h100 vendadiv">
+    <div class="vendastabela">
+        <table class="vendas">
+            <thead>
+                <tr>
+                    <td>Data</td>
+                    <td>Cliente</td>
+                    <td>Valor</td>
+                    <td>Comissão-taxa</td>
+                    <td>Comissão-valor</td>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each vendas}}
+                <tr>
+                    <td>{{this.Pedido_data}}</td>
+                    <td>{{this.cliente}}</td>
+                    <td>{{this.Valor_Total}} R$</td>
+                    <td>{{this.Comissao_taxa}}%</td>
+                    <td>{{this.Comissao_valor}} R$</td>
+                </tr>
+                {{/each}}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>Total</td>
+                    <td> </td>
+                    <td></td>
+                    <td> </td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="form">
+        <h1>Filtros:</h1>
+        <form action="/vendasFuncionario" method="get">
+            <p>Data:</p>
+            <div>
+                <input type="date" name="dataMin" id="dataMin">
+                <span>até: </span>
+                <input type="date" name="dataMax" id="dataMax">
+            </div>
+            <p>Cliente:</p>
+            <div><input type="text" name="cliente" id="cliente" placeholder="Marrcelo Ast de Souza Junior"></div>
+            <p>Valor:</p>
+            <div>
+                <input type="number" name="valorMin" id="valorMin" placeholder="000000">
+                <span>até: </span>
+                <input type="number" name="valorMax" id="valorMax" placeholder="999999">
+            </div>
+            <input type="submit" value="Aplicar" id="bungas">
+        </form>
+    </div>
+<div>
+<script>
+
+    const vendas = document.querySelector('tbody')
+    document.querySelector('tfoot').querySelectorAll('td').forEach((Element, index)=>{
+        console.log(Element)
+        if(Element.innerHTML==''){
+            Element.innerHTML=somar(index)+' R$'
+        }
+        else if(Element.innerHTML==' '){
+            Element.classList.add('naotem')
+        }
+
+    })
+    function somar(qual){
+        let soma=0
+        vendas.querySelectorAll('tr').forEach((Element)=>{
+            soma+=parseFloat(Element.querySelectorAll('td')[qual].innerHTML)
+        })
+        return soma
+    }
+    
+
+</script>

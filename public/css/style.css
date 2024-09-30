@@ -470,3 +470,73 @@ nav.menus{
     transform: none;
     filter: none;
 }
+.vendas{
+    border-collapse: collapse;
+    .naotem, tfoot td:first-child, thead td{
+        background-color: var(--color2);
+        font-weight: 900;
+    }
+    tbody tr:nth-child(even){
+        filter: brightness(.95);
+    }
+    td{
+        border: 3px solid var(--black);
+        text-align: center;
+        padding: 5px;
+        background-color: var(--white);
+    }
+}
+.vendastabela{
+    max-height: 70vh;
+    overflow-x: hidden;
+
+
+}
+.vendadiv{
+    font-size: 1.25em;
+    gap: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    h1{
+        text-align: center;
+    }
+    .form form{
+        border: 3px solid var(--black);
+        padding: 20px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        p{
+            font-weight: 900;
+        }
+        >div{
+            width: 100%;
+            display: flex;
+            input{
+                width: 100%;
+                padding: 5px;
+                border: 3px solid var(--black);
+                margin-bottom: 40px;
+            }
+            span{
+                padding: 5px;
+                font-weight: 900;
+            }
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        input[type='submit']{
+            background-color: var(--black);
+            position: absolute;
+            width: 90px;
+            border: none;
+            border-radius: 15px;
+            color: var(--white);
+            height: 26px;
+            left: calc(50% - 45px);
+            bottom: -13px;
+            cursor: pointer;
+        }
+    }
+}
