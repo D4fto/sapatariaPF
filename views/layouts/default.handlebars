@@ -23,6 +23,12 @@
     <label for="chatCheck">
         <div class="chat"><i class="bi bi-chat-dots-fill"></i></div>
     </label>
+    <script>
+        const iframe= document.getElementById('chatIframe')
+        iframe.onload = function() {
+            iframe.contentWindow.document.getElementById('cpf').innerText = '{{cpfFuncionario2}}';
+        };
+    </script>
     {{/if}}
     <script>
         function verificaScroll() {
@@ -41,6 +47,7 @@
             console.log('jfbfjbfgkhjbdfgd')
             document.querySelector('.menuH').style.paddingRight = '20px'
         }
+        
     </script>
 </body>
 </html>

@@ -78,6 +78,7 @@ app.get('/menu', authenticated, (req,res)=>{
                 imagemFuncionario: req.user.Imagem_Funcionario, 
                 nomeFuncionario: req.user.Nome_Pessoa, 
                 cpfFuncionario: censureCpf(formatCpf(req.user.Pessoa_cpf_Pessoa)), 
+                cpfFuncionario2: req.user.Pessoa_cpf_Pessoa, 
                 contatoFuncionario: formatarTelefone(req.user.telefone_Pessoa), 
                 category: category
             })
@@ -100,6 +101,7 @@ app.get('/services/:id', authenticated, (req,res)=>{
                 imagemFuncionario: req.user.Imagem_Funcionario, 
                 nomeFuncionario: req.user.Nome_Pessoa, 
                 cpfFuncionario: censureCpf(formatCpf(req.user.Pessoa_cpf_Pessoa)), 
+                cpfFuncionario2: req.user.Pessoa_cpf_Pessoa, 
                 contatoFuncionario: formatarTelefone(req.user.telefone_Pessoa), 
                 category: modules
             })
@@ -123,7 +125,9 @@ app.get('/account', authenticated, (req,res)=>{
                     res.render('account',{
                         imagemFuncionario: req.user.Imagem_Funcionario, 
                         nomeFuncionario: req.user.Nome_Pessoa, 
-                        cpfFuncionario: formatCpf(req.user.Pessoa_cpf_Pessoa), 
+                        cpfFuncionario: censureCpf(formatCpf(req.user.Pessoa_cpf_Pessoa)), 
+                        cpfFuncionario3: formatCpf(req.user.Pessoa_cpf_Pessoa), 
+                        cpfFuncionario2: req.user.Pessoa_cpf_Pessoa, 
                         contatoFuncionario: formatarTelefone(req.user.telefone_Pessoa), 
                         salario: (req.user.Salario_Funcionario).toFixed(2),
                         adimissao: extrairData(req.user.Adimissao_Funcionario),
