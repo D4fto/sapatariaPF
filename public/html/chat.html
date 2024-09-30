@@ -39,7 +39,7 @@
                 msg: messageInput.value
             })
             if (message) {
-                socket.emit('message', message); // Envia a mensagem ao servidor
+                socket.emit('message', message); // Envia a mensagem ao servido
                 messageInput.value = ''; // Limpa o campo de entrada
             }
         }
