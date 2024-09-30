@@ -398,7 +398,7 @@ nav.menus{
             cursor: pointer;
         }
     }
-    .eu, .ele{
+    .eu, .ele, .sup{
         width: 70%;
         border-radius: 15px;
     }
@@ -411,7 +411,7 @@ nav.menus{
         background-color: var(--color2);
     }
     .sup{
-        background-color: lime;
+        background-color: #fff600;
         span{
             font-size: .5em;
             font-weight: 100;
