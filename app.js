@@ -6,6 +6,7 @@ const { authenticated } = require("./helpers/authenticated");
 const { censureCpf, formatCpf } = require('./helpers/cpf')
 const passport = require('passport')
 var session = require('express-session');
+const multer = require('multer');
 const app = express();
 const fs = require('fs');
 const path = require('path');
@@ -19,9 +20,23 @@ function verificarArquivoHbs(nomeArquivo) {
   if (fs.existsSync(caminhoArquivo)) {
     return true
   } else {
-    return false
+    return false 
   }
-}
+} 
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null,"public/imgs/")
+    },
+    filename: function(req, file, cb){
+        arq=file.originalname.replaceAll(' ','_')+Date.now()+path.extname(file.originalname)
+        console.log(arq)
+        cb(null, arq)
+        connection.execute('UPDATE `sapatariapf`.`Funcionario` SET `Imagem_Funcionario` = ? WHERE `Pessoa_cpf_Pessoa` = ?;',[arq,req.user.Pessoa_cpf_Pessoa])
+    }
+});
+const upload = multer({storage});
+
 
 // Exemplo de uso
 verificarArquivoHbs('meuArquivo');
@@ -105,6 +120,9 @@ app.get('/menu', authenticated, (req,res)=>{
                 })
             })
     })
+})
+app.post('/alterar_img', authenticated, upload.single("file"), (req,res) =>{
+    res.redirect('/account')
 })
 app.get('/services/:id', authenticated, (req,res)=>{
     connection.execute(`SELECT *, id_Modulo in (SELECT Modulo_id_Modulo FROM sapatariapf.Modulo_has_Funcionario where Funcionario_Pessoa_cpf_Pessoa = ?) as 'possui' FROM sapatariapf.Modulo where Categoria_id_Categoria = ?;`,
@@ -224,6 +242,9 @@ app.get('/vendasFuncionario', authenticated, (req,res)=>{
             })
         }
     )
+    
+})
+app.post('/atualizar', authenticated, (req, res)=>{
     
 })
 app.listen(process.env.PORT || 8080); 

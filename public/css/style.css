@@ -246,6 +246,7 @@ nav.menus{
     padding: 25px;
 }
 .dados, .endereco{
+    width: 90%;
     i{
         cursor: pointer;
         width: min-content;
@@ -292,23 +293,32 @@ nav.menus{
         width: 50%;
     }
     label{
-        border-bottom-left-radius: 40px;
         border-bottom-right-radius: 40px;
+        background-color: var(--color1);
+        color: var(--color2);
         width: 100%;
-        background-color: var(--color2);
         padding: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         i{
-            color: var(--color1);
             font-size: 2.5em;
         }
         transition: filter .5s;
     }
+    label:first-child{
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 40px;
+        background-color: var(--color2);
+        color: var(--color1);
+        
+    }
     label:hover{
         filter: brightness(.75);
+    }
+    >div{
+        display: flex;
     }
 }
 .endereco>div{
@@ -328,23 +338,29 @@ nav.menus{
 .botoes_dados{
     display: flex;
     width: 80%;
-    button{
+    #enviar, #vendas{
         padding: 10px 35px;
         border-radius: 20px;
         border: none;
         cursor: pointer;
         transition: .5s filter;
     }
-    button:first-child{
+    #enviar{
         background-color: var(--black);
         color: var(--white);
     }
-    button:last-child{
+    #enviar.nao{
+        background-color: red;
+    }
+    #vendas{
         background-color: var(--color1);
         color: var(--white);
         margin-left: 25px;
     }
-    button:hover{
+    #vendas.nao{
+        background-color: lime;
+    }
+    #enviar:hover, #vendas:hover{
         filter: brightness(0.8);
     }
 }
@@ -539,4 +555,12 @@ nav.menus{
             cursor: pointer;
         }
     }
+}
+#formMassa{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    padding-right: 0px;
+    width: 300%;
 }

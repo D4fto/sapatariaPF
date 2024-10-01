@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        div{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div for="pog" onclick="muda('texto1')">jotave <i class="bi bi-caret-down-fill" id="texto1i"></i></div>
+    <p style="display: none;" id="texto1" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sit eaque expedita fugit quis, dolorum saepe perferendis distinctio id deleniti reprehenderit. Blanditiis, id temporibus? Sapiente mollitia voluptatibus consequatur beatae impedit?</p>
+    <div for="pog" onclick="muda('texto2')">jotave <i class="bi bi-caret-down-fill" id="texto1i"></i></div>
+    <p style="display: none;" id="texto2" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sit eaque expedita fugit quis, dolorum saepe perferendis distinctio id deleniti reprehenderit. Blanditiis, id temporibus? Sapiente mollitia voluptatibus consequatur beatae impedit?</p>
+    <div for="pog" onclick="muda('texto3')">jotave <i class="bi bi-caret-down-fill" id="texto1i"></i></div>
+    <p style="display: none;" id="texto3" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sit eaque expedita fugit quis, dolorum saepe perferendis distinctio id deleniti reprehenderit. Blanditiis, id temporibus? Sapiente mollitia voluptatibus consequatur beatae impedit?</p>
+    <script>
+        function muda(id) {
+            const element = document.getElementById(id)
+            if(element.style.display=='flex'){
+                element.style.display='none'
+                document.getElementById(id+'i').classList.add('bi-caret-down-fill')
+                document.getElementById(id+'i').classList.remove('bi-caret-up-fill')
+                
+            }else{
+                element.style.display='flex'
+                document.getElementById(id+'i').classList.remove('bi-caret-down-fill')
+                document.getElementById(id+'i').classList.add('bi-caret-up-fill')
+            }
+        }
+    </script>
+</body>
+</html>

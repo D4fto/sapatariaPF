@@ -1,58 +1,64 @@
 <div class="h100 account">
-    <div class="dados">
-        <label for="nome">Nome: </label>
-        <input type="text" name="nome" id="nome" value="{{nomeFuncionario}}" disabled>
-        <label for="cpf">CPF: </label>
-        <div><input type="password" name="cpf" id="cpf" value="{{cpfFuncionario3}}" disabled><i class="bi bi-eye-slash" onclick="mudar('cpf')"></i></div>
-        <label for="telefone">Telefone: </label>
-        <input type="text" name="telefone" id="telefone" value="{{contatoFuncionario}}" disabled>
-        <label for="data">Data de Adimissão: </label>
-        <input type="date" name="data" id="data" value="{{adimissao}}" disabled>
-        <label for="salario">Salário: </label>
-        <div><input type="password" name="salario" id="salario" value="{{salario}} R$" disabled><i class="bi bi-eye-slash" onclick="mudar('salario')"></i></div>
-        <label for="comissao">Comissao: </label>
-        <div><input type="password" name="comissao" id="comissao" value="{{comissao}}%" disabled><i class="bi bi-eye-slash" onclick="mudar('comissao')"></i></div>
-        <div class="botoes_dados">
-            <button  id="enviar" onclick="liberarParaOsCrias()">Editar</button>
-            <button id="vendas" onclick="redirecionar('/vendasFuncionario')">Vendas</button>
-        </div>
-    </div>
-    <div class="endereco">
-        <h1>Endereço: </h1>
-        <div>
-            <div>
-                <label for="CEP">CEP: </label>
-                <input type="text" name="CEP" id="CEP" value="{{endereco.CEP}}" disabled>
-            </div>
-            <div>
-                <label for="numero">Nº: </label>
-                <input type="text" name="numero" id="numero" value="{{endereco.N_casa_Endereco}}" disabled>
+    <form action="/atualizar" method="post" id="formMassa">
+        <div class="dados">
+            <label for="nome">Nome: </label>
+            <input type="text" name="nome" id="nome" value="{{nomeFuncionario}}" disabled>
+            <label for="cpf">CPF: </label>
+            <div><input type="password" name="cpf" id="cpf" value="{{cpfFuncionario3}}" disabled><i class="bi bi-eye-slash" onclick="mudar('cpf')"></i></div>
+            <label for="telefone">Telefone: </label>
+            <input type="text" name="telefone" id="telefone" value="{{contatoFuncionario}}" disabled>
+            <label for="data">Data de Adimissão: </label>
+            <input type="date" name="data" id="data" value="{{adimissao}}" disabled>
+            <label for="salario">Salário: </label>
+            <div><input type="password" name="salario" id="salario" value="{{salario}} R$" disabled><i class="bi bi-eye-slash" onclick="mudar('salario')"></i></div>
+            <label for="comissao">Comissao: </label>
+            <div><input type="password" name="comissao" id="comissao" value="{{comissao}}%" disabled><i class="bi bi-eye-slash" onclick="mudar('comissao')"></i></div>
+            <div class="botoes_dados">
+                <p  id="enviar" class="sim" onclick="liberarParaOsCrias()">Editar</p>
+                <p id="vendas" class="sim" onclick="redirecionar()">Vendas</p>
             </div>
         </div>
-        <label for="rua">Rua: </label>
-        <input type="text" name="rua" id="rua" value="{{endereco.Rua_Endereco}}" disabled>
-        <label for="numero">Bairro: </label>
-        <input type="text" name="bairro" id="bairro" value="{{endereco.Bairro}}" disabled>
-        <div>
+        <div class="endereco">
+            <h1>Endereço: </h1>
             <div>
-                <label for="cidade">Cidade: </label>
-                <input type="text" name="cidade" id="cidade" value="{{endereco.Nome_Cidade}}" disabled>
+                <div>
+                    <label for="CEP">CEP: </label>
+                    <input type="text" name="CEP" id="CEP" value="{{endereco.CEP}}" disabled>
+                </div>
+                <div>
+                    <label for="numero">Nº: </label>
+                    <input type="text" name="numero" id="numero" value="{{endereco.N_casa_Endereco}}" disabled>
+                </div>
             </div>
+            <label for="rua">Rua: </label>
+            <input type="text" name="rua" id="rua" value="{{endereco.Rua_Endereco}}" disabled>
+            <label for="numero">Bairro: </label>
+            <input type="text" name="bairro" id="bairro" value="{{endereco.Bairro}}" disabled>
             <div>
-                <label for="estado">Estado: </label>
-                <select name="estado" id="estado" disabled='disabled'>
-                    {{#each estados}}
-                    <option value="{{this.id_Estado}}">{{this.Nome_Estado}}</option>
-                    {{/each}}
-                </select>
+                <div>
+                    <label for="cidade">Cidade: </label>
+                    <input type="text" name="cidade" id="cidade" value="{{endereco.Nome_Cidade}}" disabled>
+                </div>
+                <div>
+                    <label for="estado">Estado: </label>
+                    <select name="estado" id="estado" disabled='disabled'>
+                        {{#each estados}}
+                        <option value="{{this.id_Estado}}">{{this.Nome_Estado}}</option>
+                        {{/each}}
+                    </select>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="foto">
-        <img src="imgs/{{imagemFuncionario}}" alt="Foto do funcionário">
-        <input type="file" name="foto" id="foto" hidden>
-        <label for="foto"><i class="bi bi-images"></i></label>
-    </div>
+    </form>
+    <form action="/alterar_img" method="post" class="foto" enctype="multipart/form-data">
+            <img src="imgs/{{imagemFuncionario}}" alt="Foto do funcionário">
+            <div>
+                <label for="file"><i class="bi bi-images" ></i></label>
+                <input type="file" name="file" id="file" accept="image/png, image/jpg, image/jpeg" hidden>
+                <input type="submit" value="" id='subn' hidden>
+                <label for="subn"><i class="bi bi-send"></i></label>
+            </div>
+    </form>
 </div>
 <script>
     function mudar(elemento){
@@ -69,7 +75,11 @@
         return
 
     }
+    function enviarForm(){
+        document.getElementById('formMassa').submit()
+    }
     function liberarParaOsCrias(){
+        
         const inputs = document.querySelectorAll('input')
         const selects = document.querySelectorAll('select')
         for(let i = 0; i<selects.length; i++){
@@ -88,5 +98,28 @@
             }
             element.disabled=true
         }
+        if(document.getElementById('enviar').classList.contains('sim')){
+            document.getElementById('enviar').classList.remove('sim')
+            document.getElementById('enviar').classList.add('nao')
+            document.getElementById('enviar').innerHTML='Parar edição'
+
+            document.getElementById('vendas').classList.remove('sim')
+            document.getElementById('vendas').classList.add('nao')
+            document.getElementById('vendas').innerHTML='Atualizar'
+            document.getElementById('vendas').onclick=enviarForm
+            //document.getElementById('vendas').type='submit'
+        }
+        else if(document.getElementById('enviar').classList.contains('nao')){
+            document.getElementById('enviar').classList.add('sim')
+            document.getElementById('enviar').classList.remove('nao')
+            document.getElementById('enviar').innerHTML='Editar'
+
+            document.getElementById('vendas').classList.add('sim')
+            document.getElementById('vendas').classList.remove('nao')
+            document.getElementById('vendas').innerHTML='Vendas'
+            document.getElementById('vendas').onclick=redirecionar
+
+        }
     }
+    document.getElementById('vendas').onclick=redirecionar
 </script>
