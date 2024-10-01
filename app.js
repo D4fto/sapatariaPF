@@ -107,7 +107,7 @@ app.get('/menu', authenticated, (req,res)=>{
                     allow: element.nome_Categoria=='Suporte'?1:element.possui
                 })
             }
-            connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 40;',(err, mensagens)=>{
+            connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt DESC LIMIT 40;',(err, mensagens)=>{
                 res.render('menu',{
                     imagemFuncionario: req.user.Imagem_Funcionario, 
                     nomeFuncionario: req.user.Nome_Pessoa, 
@@ -137,7 +137,7 @@ app.get('/services/:id', authenticated, (req,res)=>{
                     allow: element.nome_Modulo=='FAQ'?1:element.possui
                 })
             }
-            connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 40;',(err, mensagens)=>{
+            connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt DESC LIMIT 40;',(err, mensagens)=>{
                 res.render('menu',{
                     imagemFuncionario: req.user.Imagem_Funcionario, 
                     nomeFuncionario: req.user.Nome_Pessoa, 
@@ -156,7 +156,7 @@ app.get('/services/:id/:id2', authenticated, (req,res)=>{
         [req.params.id,req.params.id2],
         (err, result)=>{
             if(result){
-                connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 40;',(err, mensagens)=>{
+                connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt DESC LIMIT 40;',(err, mensagens)=>{
                     const dados = {
                         imagemFuncionario: req.user.Imagem_Funcionario, 
                         nomeFuncionario: req.user.Nome_Pessoa, 
@@ -190,7 +190,7 @@ app.get('/account', authenticated, (req,res)=>{
         (err, result)=>{
             connection.query(`SELECT * FROM Estado;`
                 ,(erro, states)=>{
-                    connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 40;',(err, mensagens)=>{
+                    connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt DESC LIMIT 40;',(err, mensagens)=>{
                         res.render('account',{
                             imagemFuncionario: req.user.Imagem_Funcionario, 
                             nomeFuncionario: req.user.Nome_Pessoa, 
@@ -228,7 +228,7 @@ app.get('/vendasFuncionario', authenticated, (req,res)=>{
                 element.Pedido_data = extrairData(element.Pedido_data)
                 element.Comissao_taxa = element.Comissao_taxa*100
             })
-            connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt LIMIT 40;',(err, mensagens)=>{
+            connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt DESC LIMIT 40;',(err, mensagens)=>{
                 res.render('vendasFuncionario',{
                     imagemFuncionario: req.user.Imagem_Funcionario, 
                     nomeFuncionario: req.user.Nome_Pessoa, 
@@ -243,6 +243,48 @@ app.get('/vendasFuncionario', authenticated, (req,res)=>{
         }
     )
     
+})
+app.get('/pagamento',authenticated,(req,res)=>{
+    const dataMin = req.query.dataMin?req.query.dataMin:'0000-01-01'
+    const dataMax = req.query.dataMax?req.query.dataMax:'9999-12-12'
+    connection.execute(
+        `SELECT 
+        f.Pessoa_cpf_Pessoa AS Funcionario_Pessoa_cpf_Pessoa, 
+        f.Salario_Funcionario, 
+        p.Nome_Pessoa AS Funcionario, 
+        COALESCE(SUM(ped.Comissao_valor), 0) AS comissao, 
+        (f.Salario_Funcionario + COALESCE(SUM(ped.Comissao_valor), 0)) AS total
+        FROM 
+        Funcionario f
+        LEFT JOIN 
+        Pedido ped 
+        ON f.Pessoa_cpf_Pessoa = ped.Funcionario_Pessoa_cpf_Pessoa 
+        AND ped.Pedido_data >= ?
+        AND ped.Pedido_data <= ?
+        JOIN 
+        Pessoa p 
+        ON f.Pessoa_cpf_Pessoa = p.cpf_Pessoa
+        GROUP BY 
+        f.Pessoa_cpf_Pessoa, f.Salario_Funcionario, p.Nome_Pessoa
+        ORDER BY 
+        p.Nome_Pessoa;`,
+        [dataMin, dataMax],
+        (err, result)=>{
+            console.log(result)
+            connection.query('SELECT Mensagem.*, Cargo_id_Cargo, Nome_Pessoa FROM sapatariapf.Mensagem, Funcionario, Pessoa where Funcionario_Pessoa_cpf_Pessoa=Pessoa_cpf_Pessoa and Pessoa_cpf_Pessoa=cpf_Pessoa order by CreatedAt DESC LIMIT 40;',(err, mensagens)=>{
+                res.render('pagamento',{
+                    imagemFuncionario: req.user.Imagem_Funcionario, 
+                    nomeFuncionario: req.user.Nome_Pessoa, 
+                    cpfFuncionario: censureCpf(formatCpf(req.user.Pessoa_cpf_Pessoa)), 
+                    cpfFuncionario3: formatCpf(req.user.Pessoa_cpf_Pessoa), 
+                    cpfFuncionario2: req.user.Pessoa_cpf_Pessoa, 
+                    contatoFuncionario: formatarTelefone(req.user.telefone_Pessoa), 
+                    pagamentos: result,
+                    mensagens: mensagens
+                })
+            })
+        }
+    )
 })
 app.post('/atualizar', authenticated, (req, res)=>{
     
