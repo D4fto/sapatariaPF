@@ -55,7 +55,7 @@
                     li.classList.add('eu')
                     li.innerHTML = `<p class="message">${message.msg}</p>`;
                 }
-                iframe.contentWindow.document.getElementById('messages').appendChild(li);
+                iframe.contentWindow.document.getElementById('messages').insertAdjacentElement('afterbegin', li);
             })
             
             iframe.contentWindow.document.getElementById('chatMain').scrollTop = iframe.contentWindow.document.getElementById('chatMain').scrollHeight;
