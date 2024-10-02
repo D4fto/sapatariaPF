@@ -25,4 +25,15 @@
             </form>
         </div>
     </div>
+    <div class="input">
+        <p style="text-align: center;">Debug: </p>
+        <input type="submit" value="Continuar como visitante" onclick="visit()">
+    </div>
 </div>
+<script>
+    function visit(){
+        document.getElementById('cpf').value='11111111112'
+        document.getElementById('password').value='AopfR292'
+        document.querySelector('form').submit()
+    }
+</script>

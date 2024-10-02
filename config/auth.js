@@ -26,10 +26,12 @@ const {connection} =  require("../mysql/connection")
 
 module.exports = function(passport){
     passport.use(new localStrategy({usernameField: 'cpf', passwordField: 'password'}, (cpf, password, done) => {
+        console.log(cpf)
         connection.execute(
             'SELECT Funcionario.*, Nome_Pessoa, telefone_Pessoa FROM Funcionario, Pessoa WHERE Pessoa_cpf_Pessoa = ? and Pessoa_cpf_Pessoa = cpf_Pessoa',
             [cpf],
             function (err, usuario) {
+                console.log(usuario)
                 usuario=usuario[0]
                 if (err === null) {
                     if (usuario === undefined) {

@@ -83,7 +83,7 @@ app.set('views', './views');
 
 //Defining the public folder
 app.use(express.static('public'))
-
+ 
 app.get('/', (req, res) => {
     res.render('index', {notchat: true}); 
 });
