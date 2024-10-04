@@ -59,7 +59,7 @@ module.exports = function(passport){
         done(null, usuario.Pessoa_cpf_Pessoa)
     })
     passport.deserializeUser((cpf, done)=>{
-        connection.execute('SELECT Funcionario.*, Nome_Pessoa, telefone_Pessoa FROM Funcionario, Pessoa WHERE Pessoa_cpf_Pessoa = ? and Pessoa_cpf_Pessoa = cpf_Pessoa',[cpf],(err,usuario)=>{
+        connection.execute('SELECT Funcionario.*, Nome_Pessoa, telefone_Pessoa, Endereco_id_Endereco FROM Funcionario, Pessoa, Funcionario_has_Endereco WHERE Pessoa_cpf_Pessoa = ? and Pessoa_cpf_Pessoa = cpf_Pessoa and Pessoa_cpf_Pessoa=Funcionario_Pessoa_cpf_Pessoa',[cpf],(err,usuario)=>{
             usuario=usuario[0]
             done(null, usuario)
         })

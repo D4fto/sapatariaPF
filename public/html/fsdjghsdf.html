@@ -12,26 +12,43 @@
     </style>
 </head>
 <body>
-    <div for="pog" onclick="muda('texto1')">jotave <i class="bi bi-caret-down-fill" id="texto1i"></i></div>
-    <p style="display: none;" id="texto1" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sit eaque expedita fugit quis, dolorum saepe perferendis distinctio id deleniti reprehenderit. Blanditiis, id temporibus? Sapiente mollitia voluptatibus consequatur beatae impedit?</p>
-    <div for="pog" onclick="muda('texto2')">jotave <i class="bi bi-caret-down-fill" id="texto1i"></i></div>
-    <p style="display: none;" id="texto2" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sit eaque expedita fugit quis, dolorum saepe perferendis distinctio id deleniti reprehenderit. Blanditiis, id temporibus? Sapiente mollitia voluptatibus consequatur beatae impedit?</p>
-    <div for="pog" onclick="muda('texto3')">jotave <i class="bi bi-caret-down-fill" id="texto1i"></i></div>
-    <p style="display: none;" id="texto3" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sit eaque expedita fugit quis, dolorum saepe perferendis distinctio id deleniti reprehenderit. Blanditiis, id temporibus? Sapiente mollitia voluptatibus consequatur beatae impedit?</p>
-    <script>
-        function muda(id) {
-            const element = document.getElementById(id)
-            if(element.style.display=='flex'){
-                element.style.display='none'
-                document.getElementById(id+'i').classList.add('bi-caret-down-fill')
-                document.getElementById(id+'i').classList.remove('bi-caret-up-fill')
-                
-            }else{
-                element.style.display='flex'
-                document.getElementById(id+'i').classList.remove('bi-caret-down-fill')
-                document.getElementById(id+'i').classList.add('bi-caret-up-fill')
-            }
+<div onclick="muda('texto1')">Como posso acessar o sistema de gerenciamento de estoque? <i class="bi bi-caret-down-fill" id="texto1i"></i></div>
+<p style="display: none;" id="texto1">Você pode acessar o sistema de gerenciamento de estoque usando seu login e senha fornecidos. Caso não tenha acesso, entre em contato com o gerente da loja para obter as credenciais necessárias.</p>
+
+<div onclick="muda('texto2')">O que devo fazer se o sistema apresentar um erro ao processar uma venda? <i class="bi bi-caret-down-fill" id="texto2i"></i></div>
+<p style="display: none;" id="texto2">Se ocorrer um erro, primeiro verifique sua conexão com a internet e tente novamente. Se o problema persistir, registre o erro e notifique um supervisor ou a equipe de suporte técnico para assistência.</p>
+
+<div onclick="muda('texto3')">Como posso registrar um retorno ou troca de produto no sistema? <i class="bi bi-caret-down-fill" id="texto3i"></i></div>
+<p style="display: none;" id="texto3">Para registrar um retorno ou troca, selecione a opção correspondente no sistema, insira os detalhes do produto e o motivo da troca ou retorno, e siga as instruções na tela para concluir o processo.</p>
+
+<div onclick="muda('texto4')">Qual é o procedimento para atualizar os preços e promoções no sistema? <i class="bi bi-caret-down-fill" id="texto4i"></i></div>
+<p style="display: none;" id="texto4">Você deve acessar a seção de gerenciamento de preços e promoções no sistema. Insira os novos preços e detalhes da promoção, e certifique-se de salvar as alterações. Consulte o manual do sistema para passos específicos se necessário.</p>
+
+<div onclick="muda('texto5')">Como posso gerar relatórios de vendas diárias ou semanais? <i class="bi bi-caret-down-fill" id="texto5i"></i></div>
+<p style="display: none;" id="texto5">Acesse a seção de relatórios no sistema e selecione o tipo de relatório que deseja gerar. Escolha o intervalo de datas e clique em "Gerar". O relatório pode ser exportado para formatos como PDF ou Excel.</p>
+
+<div onclick="muda('texto6')">Como faço para verificar as informações de clientes cadastrados no sistema? <i class="bi bi-caret-down-fill" id="texto6i"></i></div>
+<p style="display: none;" id="texto6">Utilize a função de pesquisa na seção de clientes do sistema. Insira o nome ou o número de identificação do cliente para localizar o cadastro e acessar as informações necessárias.</p>
+
+<div onclick="muda('texto7')">O que devo fazer para criar um novo cadastro de cliente no sistema? <i class="bi bi-caret-down-fill" id="texto7i"></i></div>
+<p style="display: none;" id="texto7">Para criar um novo cadastro, vá até a seção de clientes, clique em "Adicionar Novo Cliente" e preencha os campos obrigatórios, como nome, e-mail e telefone. Certifique-se de salvar o cadastro após inserir as informações.</p>
+
+<script>
+    function muda(id) {
+        const element = document.getElementById(id);
+        const icon = document.getElementById(id + 'i');
+        
+        if (element.style.display === 'flex') {
+            element.style.display = 'none';
+            icon.classList.add('bi-caret-down-fill');
+            icon.classList.remove('bi-caret-up-fill');
+        } else {
+            element.style.display = 'flex';
+            icon.classList.remove('bi-caret-down-fill');
+            icon.classList.add('bi-caret-up-fill');
         }
-    </script>
+    }
+</script>
+
 </body>
 </html>

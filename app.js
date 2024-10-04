@@ -11,6 +11,10 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 
+function removeNonNumeric(str) {
+    return str.replace(/[^\d.]/g, '');
+  }
+
 // Função para verificar se um arquivo .hbs existe
 function verificarArquivoHbs(nomeArquivo) {
   // Define o caminho completo do arquivo (ajuste o caminho conforme necessário)
@@ -152,6 +156,10 @@ app.get('/services/:id', authenticated, (req,res)=>{
         })
     })
 app.get('/services/:id/:id2', authenticated, (req,res)=>{
+    if(req.params.id2==13){
+        res.redirect('/pagamento')
+        return
+    }
     connection.execute(`SELECT * FROM sapatariapf.Modulo where Categoria_id_Categoria = ? and id_Modulo=?;`,
         [req.params.id,req.params.id2],
         (err, result)=>{
@@ -286,7 +294,53 @@ app.get('/pagamento',authenticated,(req,res)=>{
         }
     )
 })
-app.post('/atualizar', authenticated, (req, res)=>{
-    
+app.get('/logout', (req,res, next) => {
+    req.logout((err)=>{
+        if(err){
+            return next(err)
+        }
+        res.redirect('/')
+    })
 })
+app.post('/atualizar', authenticated, (req, res) => {
+    // Primeiro UPDATE na tabela Pessoa
+    connection.execute(
+      'UPDATE `sapatariapf`.`Pessoa` SET `Nome_Pessoa` = ?, `telefone_Pessoa` = ? WHERE `cpf_Pessoa` = ?;',
+      [req.body.nome, removeNonNumeric(req.body.telefone), req.user.Pessoa_cpf_Pessoa],
+      (err, result) => {
+        if (err) {
+          console.error('Erro na atualização de Pessoa:', err);
+          return res.status(500).send('Erro ao atualizar Pessoa');
+        }
+  
+        // Segundo UPDATE na tabela Funcionario
+        connection.execute(
+          'UPDATE `sapatariapf`.`Funcionario` SET `Salario_Funcionario` = ?, `Comissao_Funcionario` = ?, `Adimissao_Funcionario` = ? WHERE `Pessoa_cpf_Pessoa` = ?;',
+          [parseFloat(removeNonNumeric(req.body.salario)), parseFloat(removeNonNumeric(req.body.comissao)) / 100, req.body.data, req.user.Pessoa_cpf_Pessoa],
+          (err, result) => {
+            if (err) {
+              console.error('Erro na atualização de Funcionario:', err);
+              return res.status(500).send('Erro ao atualizar Funcionario');
+            }
+  
+            // Terceiro UPDATE na tabela Endereco
+            connection.execute(
+              'UPDATE `sapatariapf`.`Endereco` SET `Rua_Endereco` = ?, `N_casa_Endereco` = ?, `Bairro` = ?, `CEP` = ? WHERE `id_Endereco` = ?;',
+              [req.body.rua, req.body.numero, req.body.bairro, req.body.CEP, req.user.Endereco_id_Endereco],
+              (err, result) => {
+                if (err) {
+                  console.error('Erro na atualização de Endereco:', err);
+                  return res.status(500).send('Erro ao atualizar Endereco');
+                }
+  
+                // Tudo deu certo, redireciona para /account
+                res.redirect('/account');
+              }
+            );
+          }
+        );
+      }
+    );
+  });
+  
 app.listen(process.env.PORT || 8080); 

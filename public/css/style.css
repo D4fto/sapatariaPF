@@ -83,6 +83,7 @@ nav.menus{
     justify-content: space-between;
     list-style: none;
     gap: .9375rem;
+    z-index: 3;
     li, a{
         background-color: var(--color2);
         height: 100%;
@@ -591,7 +592,25 @@ nav.menus{
     .account>*{
         flex-wrap: wrap;
     }
-    .vendastabela{
-        
+}
+.faq{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    >*{
+        width: 80%;
+        padding: 15px;
+        font-size: 2em;
+    }
+    >div{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: var(--color2);
+        cursor: pointer;
+    }
+    >*:not(div){
+        border: 1px solid var(--black);
     }
 }
