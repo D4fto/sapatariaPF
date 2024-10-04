@@ -288,7 +288,7 @@ app.get('/pagamento',authenticated,(req,res)=>{
                     cpfFuncionario2: req.user.Pessoa_cpf_Pessoa, 
                     contatoFuncionario: formatarTelefone(req.user.telefone_Pessoa), 
                     pagamentos: result,
-                    mensagens: mensagens
+                    mensagens: mensagens 
                 })
             })
         }
